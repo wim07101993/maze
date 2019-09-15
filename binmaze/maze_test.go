@@ -4,6 +4,8 @@ import (
 	"errors"
 	"fmt"
 	"testing"
+
+	"github.com/wim07101993/maze"
 )
 
 func CompareMaze(m Maze, bs [][]bool) error {
@@ -83,5 +85,29 @@ func TestParse6x6(t *testing.T) {
 	if err := CompareMaze(m, bs); err != nil {
 		fmt.Println(m)
 		t.Error(err)
+	}
+}
+
+func TestGetOpenDirections(t *testing.T) {
+	m, err := FromFile("../mazes/5x5.maze")
+	if err != nil {
+		t.Error(err)
+	}
+
+	ds := m.GetOpenDirections(1, 0)
+	if !ds.Contains(maze.North) || !ds.Contains(maze.South) {
+		t.Errorf("Did not get the correct direction: %v", ds)
+	}
+	ds = m.GetOpenDirections(1, 1)
+	if !ds.Contains(maze.North) || !ds.Contains(maze.East) {
+		t.Errorf("Did not get the correct direction: %v", ds)
+	}
+	ds = m.GetOpenDirections(3, 3)
+	if !ds.Contains(maze.North) || !ds.Contains(maze.West) || !ds.Contains(maze.South) {
+		t.Errorf("Did not get the correct directions: %v", ds)
+	}
+	ds = m.GetOpenDirections(1, -1)
+	if !ds.Contains(maze.North) || !ds.Contains(maze.South) {
+		t.Errorf("Did not get the correct directions: %v", ds)
 	}
 }

@@ -22,3 +22,12 @@ func init() {
 	PossibleDirections[South] = South
 	PossibleDirections[West] = West
 }
+
+func (ds Directions) Contains(find Direction) bool {
+	for _, d := range ds {
+		if d == find {
+			return true
+		}
+	}
+	return false
+}
