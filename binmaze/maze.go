@@ -3,6 +3,7 @@ package binmaze
 import (
 	"bufio"
 	"io"
+	"os"
 
 	"github.com/wim07101993/maze"
 )
@@ -22,4 +23,24 @@ func FromReader(r io.Reader) Maze {
 	}
 
 	return m
+}
+
+func FromFile(path string) (Maze, error) {
+	file, err := os.Open(path)
+	if err != nil {
+		return nil, err
+	}
+	defer file.Close()
+
+	return FromReader(file), nil
+}
+
+func (m Maze) Range(f func(x, y int) bool) {
+	for y := range m {
+		for x := range m[y] {
+			if f(x, y) {
+				return
+			}
+		}
+	}
 }
