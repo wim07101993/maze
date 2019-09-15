@@ -18,3 +18,10 @@ func IsPath(b byte) bool {
 	}
 	return false
 }
+
+type Path []*Coordinate
+
+func GeneratePath(maxX, maxY int) Path {
+	// TODO implment generate path
+	return nil
+}
