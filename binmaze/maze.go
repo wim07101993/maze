@@ -5,7 +5,6 @@ import (
 	"io"
 	"os"
 	"strings"
-	"sync"
 
 	"github.com/wim07101993/maze"
 )
@@ -160,23 +159,4 @@ func (m Maze) String() string {
 	}
 
 	return builder.String()
-}
-
-func Wait(cs []chan bool) {
-	merge := make(chan bool)
-
-	var wg sync.WaitGroup
-	wg.Add(len(cs))
-
-	for _, c := range cs {
-		go func(c <-chan bool, merge chan<- bool) {
-			for b := range c {
-				merge <- b
-			}
-			wg.Done()
-		}(c, merge)
-	}
-
-	wg.Wait()
-	close(merge)
 }
