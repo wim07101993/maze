@@ -92,6 +92,7 @@ func TestGetOpenDirections(t *testing.T) {
 	m, err := FromFile("../mazes/5x5.maze")
 	if err != nil {
 		t.Error(err)
+		return
 	}
 
 	ds := m.GetOpenDirections(1, 0)
@@ -109,5 +110,30 @@ func TestGetOpenDirections(t *testing.T) {
 	ds = m.GetOpenDirections(1, -1)
 	if !ds.Contains(maze.North) || !ds.Contains(maze.South) {
 		t.Errorf("Did not get the correct directions: %v", ds)
+	}
+}
+
+func TestNormalize(t *testing.T) {
+	m, err := FromFile("../mazes/5x5.maze")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	x, y := m.normalize(-1, -1)
+	if x != 0 || y != 0 {
+		t.Errorf("Exprected, 0,0, got %d,%d", x, y)
+	}
+	x, y = m.normalize(1, 1)
+	if x != 1 || y != 1 {
+		t.Errorf("Exprected, 1,1, got %d,%d", x, y)
+	}
+	x, y = m.normalize(3, 20)
+	if x != 3 || y != 4 {
+		t.Errorf("Exprected, 3,4, got %d,%d", x, y)
+	}
+	x, y = m.normalize(5, 4)
+	if x != 4 || y != 4 {
+		t.Errorf("Exprected, 4,4, got %d,%d", x, y)
 	}
 }
