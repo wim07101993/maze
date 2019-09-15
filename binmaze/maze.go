@@ -75,15 +75,12 @@ func (m Maze) RemoveDeadEnds() {
 	m.Range(func(x, y int) bool {
 		c := make(chan bool)
 		cs = append(cs, c)
-		go m.resolveDeadEnds(x, y, c)
+		m.resolveDeadEnds(x, y)
 		return false
 	})
-
-	Wait(cs)
 }
 
-func (m Maze) resolveDeadEnds(x, y int, done chan<- bool) {
-	defer close(done)
+func (m Maze) resolveDeadEnds(x, y int) {
 	maxX := x
 	maxY := y
 

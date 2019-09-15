@@ -139,5 +139,123 @@ func TestNormalize(t *testing.T) {
 }
 
 func TestMove(t *testing.T) {
+	m, err := FromFile("../mazes/5x5.maze")
+	if err != nil {
+		t.Error(err)
+	}
 
+	x, y := m.move(-1, -1, maze.North)
+	if x != 0 || y != 0 {
+		t.Errorf("Expected 0,0, got %d,%d", x, y)
+	}
+	x, y = m.move(1, 1, maze.East)
+	if x != 2 || y != 1 {
+		t.Errorf("Expected 2,1, got %d,%d", x, y)
+	}
+	x, y = m.move(2, 1, maze.South)
+	if x != 2 || y != 2 {
+		t.Errorf("Expected 2,2, got %d,%d", x, y)
+	}
+	x, y = m.move(3, 3, maze.North)
+	if x != 3 || y != 2 {
+		t.Errorf("Expected 3,2, got %d,%d", x, y)
+	}
+	x, y = m.move(3, 3, maze.West)
+	if x != 2 || y != 3 {
+		t.Errorf("Expected 2,3, got %d,%d", x, y)
+	}
+}
+
+func TestRemoveDeadEnds4x4(t *testing.T) {
+	m, err := FromFile("../mazes/4x4.maze")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	m.RemoveDeadEnds()
+
+	bs := [][]bool{
+		{false, true, false, false},
+		{false, true, true, false},
+		{false, false, true, false},
+		{false, false, true, false},
+	}
+
+	if err := CompareMaze(m, bs); err != nil {
+		fmt.Println(m)
+		t.Error(err)
+	}
+}
+
+func TestRemoveDeadEnds5x5(t *testing.T) {
+	m, err := FromFile("../mazes/5x5.maze")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	m.RemoveDeadEnds()
+
+	bs := [][]bool{
+		{false, true, false, false, false},
+		{false, true, true, true, false},
+		{false, false, false, true, false},
+		{false, false, false, true, false},
+		{false, false, false, true, false},
+	}
+
+	if err := CompareMaze(m, bs); err != nil {
+		fmt.Println(m)
+		t.Error(err)
+	}
+}
+
+func TestRemoveDeadEnds6x6(t *testing.T) {
+	m, err := FromFile("../mazes/6x6.maze")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	m.RemoveDeadEnds()
+
+	bs := [][]bool{
+		{false, true, false, false, false, false},
+		{false, true, false, false, false, false},
+		{false, true, true, false, false, false},
+		{false, false, true, false, false, false},
+		{false, false, true, true, false, false},
+		{false, false, false, true, false, false},
+	}
+
+	if err := CompareMaze(m, bs); err != nil {
+		fmt.Println(m)
+		t.Error(err)
+	}
+}
+
+func TestRemoveDeadEnds9x7(t *testing.T) {
+	m, err := FromFile("../mazes/9x7.maze")
+	if err != nil {
+		t.Error(err)
+		return
+	}
+
+	m.RemoveDeadEnds()
+
+	bs := [][]bool{
+		{false, true, false, false, false, false, false, false, false},
+		{false, true, false, false, true, true, true, true, false},
+		{false, true, true, false, true, false, false, true, false},
+		{false, false, true, true, true, false, false, true, false},
+		{false, false, true, false, false, false, false, true, false},
+		{false, false, true, true, true, true, true, true, false},
+		{false, false, true, false, false, true, false, false, false},
+	}
+
+	if err := CompareMaze(m, bs); err != nil {
+		fmt.Println(m)
+		t.Error(err)
+	}
 }
