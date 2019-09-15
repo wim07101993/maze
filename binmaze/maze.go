@@ -44,3 +44,39 @@ func (m Maze) Range(f func(x, y int) bool) {
 		}
 	}
 }
+
+func (m Maze) GetOpenDirections(x, y int) maze.Directions {
+	x, y = m.normalize(x, y)
+	ds := make(maze.Directions, 0)
+
+	if x == 0 || m[y][x-1] {
+		ds = append(ds, maze.West)
+	}
+	if x == len(m[0])-1 || m[y][x+1] {
+		ds = append(ds, maze.East)
+	}
+	if y == 0 || m[y-1][x] {
+		ds = append(ds, maze.North)
+	}
+	if y == len(m)-1 || m[y+1][x] {
+		ds = append(ds, maze.South)
+	}
+
+	return ds
+}
+
+func (m Maze) normalize(x, y int) (newX, newY int) {
+	if x < 0 {
+		x = 0
+	}
+	if y < 0 {
+		y = 0
+	}
+	if x > len(m[0])-1 {
+		x = len(m[0]) - 1
+	}
+	if y > len(m)-1 {
+		y = len(m) - 1
+	}
+	return x, y
+}
