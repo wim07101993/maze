@@ -137,3 +137,7 @@ func TestNormalize(t *testing.T) {
 		t.Errorf("Exprected, 4,4, got %d,%d", x, y)
 	}
 }
+
+func TestMove(t *testing.T) {
+
+}
