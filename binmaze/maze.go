@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"strings"
 
 	"github.com/wim07101993/maze"
 )
@@ -79,4 +80,21 @@ func (m Maze) normalize(x, y int) (newX, newY int) {
 		y = len(m) - 1
 	}
 	return x, y
+}
+
+func (m Maze) String() string {
+	builder := strings.Builder{}
+
+	for y := range m {
+		for x := range m[y] {
+			if m[y][x] {
+				builder.WriteString(".")
+			} else {
+				builder.WriteString("x")
+			}
+		}
+		builder.WriteString("\r\n")
+	}
+
+	return builder.String()
 }
