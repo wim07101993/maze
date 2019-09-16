@@ -9,6 +9,7 @@ type TileType int
 const (
 	Wall TileType = iota
 	Road
+	Exit
 )
 
 type Tile struct {

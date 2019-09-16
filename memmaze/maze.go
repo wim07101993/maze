@@ -39,6 +39,7 @@ func FromReader(r io.Reader) *Maze {
 
 	m.width = len(m.Map[0])
 	m.height = len(m.Map)
+	m.FindExits()
 
 	return m
 }
@@ -61,4 +62,35 @@ func (m *Maze) Range(f func(x, y int) bool) {
 			}
 		}
 	}
+}
+
+func (m *Maze) FindExits() []*Tile {
+	ts := make([]*Tile, 0)
+
+	for _, t := range m.Map[0] {
+		if t.Type == Road {
+			t.Type = Exit
+			ts = append(ts, t)
+		}
+	}
+
+	for _, t := range m.Map[m.height-1] {
+		if t.Type == Road {
+			t.Type = Exit
+			ts = append(ts, t)
+		}
+	}
+
+	for _, r := range m.Map {
+		if r[0].Type == Road {
+			r[0].Type = Exit
+			ts = append(ts, r[0])
+		}
+		if r[m.width-1].Type == Road {
+			r[m.width-1].Type = Exit
+			ts = append(ts, r[m.width-1])
+		}
+	}
+
+	return ts
 }
