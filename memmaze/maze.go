@@ -19,6 +19,7 @@ type Maze struct {
 
 func FromReader(r io.Reader) *Maze {
 	s := bufio.NewScanner(r)
+
 	m := &Maze{Map: make([][]*Tile, 0)}
 
 	for y := 0; s.Scan(); y++ {
@@ -113,7 +114,7 @@ func (m *Maze) Explore(at *Tile, p maze.Path, out chan<- []maze.Path) {
 		switch t {
 		case Road:
 			go m.Explore(c, newP, explorer)
-		case Wall:
+		case Wall, Duplicate:
 			go func() {
 				explorer <- nil
 				close(explorer)

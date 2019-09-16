@@ -116,8 +116,8 @@ func TestExplore4x4(t *testing.T) {
 	if err != nil {
 		t.Error(err)
 	}
-
 	out := make(chan []maze.Path)
+
 	go m.Explore(m.Map[0][1], maze.Path{}, out)
 
 	paths := <-out
