@@ -10,6 +10,7 @@ const (
 	Wall TileType = iota
 	Road
 	Exit
+	Duplicate
 )
 
 type Tile struct {
