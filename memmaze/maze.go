@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"io"
 	"os"
+	"strings"
 	"sync"
 
 	"github.com/wim07101993/maze"
@@ -123,7 +124,11 @@ func (m *Maze) Explore(at *Tile, p maze.Path, out chan<- []maze.Path) {
 				close(explorer)
 			}()
 		}
+
 	}
+
+	out <- m.WaitForExplorers(explorers)
+	close(out)
 }
 
 func (m *Maze) WaitForExplorers(explorers []chan []maze.Path) []maze.Path {
@@ -187,4 +192,24 @@ func (m *Maze) Look(to maze.Direction, at *Tile, p maze.Path) (TileType, *Tile) 
 	}
 
 	return Road, newT
+}
+
+func (m *Maze) String() string {
+	builder := strings.Builder{}
+
+	for y := range m.Map {
+		for x := range m.Map[y] {
+			switch m.Map[y][x].Type {
+			case Road, Exit:
+				builder.WriteString(".")
+			case Wall:
+				builder.WriteString("x")
+			case Duplicate:
+				builder.WriteString("d")
+			}
+		}
+		builder.WriteString("\r\n")
+	}
+
+	return builder.String()
 }
