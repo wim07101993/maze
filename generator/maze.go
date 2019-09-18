@@ -19,5 +19,5 @@ func New(width, height int) *Maze {
 }
 
 func (m *Maze) generateSolution() {
-	m.solution = maze.GeneratePath(m.width-1, m.height-1)
+	//m.solution = maze.GeneratePath(m.width-1, m.height-1)
 }
