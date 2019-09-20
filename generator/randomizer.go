@@ -35,3 +35,7 @@ func (r *Randomizer) Gen(size uint) int64 {
 func (r *Randomizer) GenInt() int {
 	return int(r.src.Int63())
 }
+
+func (r *Randomizer) GetIntn(max int) int {
+	return rand.New(r.src).Intn(max)
+}

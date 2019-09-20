@@ -31,3 +31,18 @@ func (ds Directions) Contains(find Direction) bool {
 	}
 	return false
 }
+
+func (d Direction) String() string {
+	switch d {
+	case North:
+		return "North"
+	case East:
+		return "East"
+	case South:
+		return "South"
+	case West:
+		return "West"
+	default:
+		return ""
+	}
+}

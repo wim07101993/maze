@@ -57,11 +57,12 @@ func (p Path) String() string {
 	for _, bs := range bss {
 		for i := 0; i < maxRow; i++ {
 			if i >= len(bs) || !bs[i] {
-				builder.WriteString(".")
-			} else {
 				builder.WriteString("x")
+			} else {
+				builder.WriteString(".")
 			}
 		}
+		builder.WriteString("\r\n")
 	}
 
 	return builder.String()
