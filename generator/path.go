@@ -4,14 +4,6 @@ import (
 	"github.com/wim07101993/maze"
 )
 
-var (
-	rnd *Randomizer
-)
-
-func init() {
-	rnd = NewRandomizer()
-}
-
 func GeneratePath(maxX, maxY int) maze.Path {
 	var startX, x, y int
 	for x == 0 || x >= maxX {

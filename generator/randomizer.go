@@ -6,6 +6,14 @@ import (
 	"time"
 )
 
+var (
+	rnd *Randomizer
+)
+
+func init() {
+	rnd = NewRandomizer()
+}
+
 type Randomizer struct {
 	src       rand.Source
 	cache     int64
